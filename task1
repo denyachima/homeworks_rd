@@ -1,6 +1,55 @@
-def power(x, y):
+phone_book = {}
 
-    return x ** y
+def stats():
+    print(f"Number of contacts: {len(phone_book)}")
 
-result = power(2, 4)
-print(result)  #Виведе 16
+def add():
+    name = input("Enter contact name: ")
+    if name in phone_book:
+        print("Contact already exists")
+    else:
+        phone = input("Enter contact phone: ")
+        email = input("Enter contact email: ")
+        phone_book[name] = {"phone": phone, "email": email}
+        print("Contact added successfully")
+
+def delete(name):
+    if name in phone_book:
+        del phone_book[name]
+        print("Contact deleted successfully")
+    else:
+        print("Contact not found")
+
+def list_all():
+    if len(phone_book) == 0:
+        print("Phone book is empty")
+    else:
+        print("List of contacts:")
+        for name in phone_book:
+            print(name)
+
+def show(name):
+    if name in phone_book:
+        contact = phone_book[name]
+        print(f"Name: {name}")
+        print(f"Phone: {contact['phone']}")
+        print(f"Email: {contact['email']}")
+    else:
+        print("Contact not found")
+
+while True:
+    command = input("Enter command (stats, add, delete, list, show): ")
+    if command == "stats":
+        stats()
+    elif command == "add":
+        add()
+    elif command.startswith("delete"):
+        name = command.split(" ")[1]
+        delete(name)
+    elif command == "list":
+        list_all()
+    elif command.startswith("show"):
+        name = command.split(" ")[1]
+        show(name)
+    else:
+        print("Invalid command")
