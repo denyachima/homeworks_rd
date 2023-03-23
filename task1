@@ -1,0 +1,6 @@
+def power(x, y):
+
+    return x ** y
+
+result = power(2, 4)
+print(result)  #Виведе 16
