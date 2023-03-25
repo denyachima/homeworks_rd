@@ -1,0 +1,18 @@
+while True:
+    text = input("Введіть текст: ")
+    if len(text) > 0:
+        for char in text:
+            if char.isdigit():
+                if int(char) % 2 == 0:
+                    print(f"це число {char}, яке є парним")
+                else:
+                    print(f"це число {char}, яке є непарним")
+            elif char.isalpha():
+                if char.islower():
+                    print(f"це буква {char}, яка є маленькою")
+                else:
+                    print(f"це буква {char}, яка є великою")
+            else:
+                print("це символ")
+    else:
+        break
