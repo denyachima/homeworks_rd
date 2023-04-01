@@ -1,0 +1,3 @@
+my_array = ['ukraine', 3, 'dog', 7, 'cat', 2.5, 'grape', 10]
+numeric_elements = list(filter(lambda x: isinstance(x, (int, float)), my_array))
+print(numeric_elements)
