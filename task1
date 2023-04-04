@@ -1,5 +1,8 @@
-def intersection(set1, set2):
-    return set1.intersection(set2)
-set1 = {1, 2, 3, 4}
-set2 = {2, 4, 6, 8}
-print(intersection(set1, set2))
+def print_numbers(n):
+    if n == 0:  
+        return
+    print(n)  
+    print_numbers(n-1)  
+
+n = int(input("Введіть число: "))
+print_numbers(n)

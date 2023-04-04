@@ -1,3 +1,9 @@
-my_list = ['ukraine', 'blue', 'yellow']
-my_list_upper = list(map(str.upper, my_list))
-print(my_list_upper)
+def factorial(n):
+    if n == 0:  
+        return 1
+    else:  n
+        return n * factorial(n-1)
+
+n = int(input("Введіть число: "))
+fact = factorial(n)
+print(f"Факторіал числа {n} дорівнює {fact}")

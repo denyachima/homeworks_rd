@@ -1,7 +1,9 @@
-def unique_elements(set1, set2):
-    return set1.symmetric_difference(set2)
-set1 = {1, 2, 3, 4, 5}
-set2 = {4, 5, 6, 7, 8}
+def fibonacci(n):
+    if n <= 1:  # базовий випадок: якщо n дорівнює 0 або 1, то повертаємо n
+        return n
+    else:  # рекурсивний випадок: обчислюємо суму двох попередніх чисел в послідовності
+        return fibonacci(n-1) + fibonacci(n-2)
 
-unique = unique_elements(set1, set2)
-print(unique) 
+n = int(input("Введіть номер числа у послідовності Фібоначчі: "))
+fib = fibonacci(n)
+print(f"Число у послідовності Фібоначчі з номером {n} дорівнює {fib}")
