@@ -1,5 +1,0 @@
-def intersection(set1, set2):
-    return set1.intersection(set2)
-set1 = {1, 2, 3, 4}
-set2 = {2, 4, 6, 8}
-print(intersection(set1, set2))
