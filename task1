@@ -1,0 +1,11 @@
+import datetime
+
+def print_function_call_time(func):
+    def wrapper(*args, **kwargs):
+        print(f"Function '{func.__name__}' was called at {datetime.datetime.now()}.")
+        return func(*args, **kwargs)
+    return wrapper
+    
+@print_function_call_time
+def my_function():
+    # тіло функції
