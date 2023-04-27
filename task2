@@ -1,0 +1,15 @@
+import re
+
+# отримання імені файлу від користувача
+filename = input("Enter filename: ")
+
+# зчитування тексту з файлу
+with open(filename, "r") as f:
+    text = f.read()
+
+# пошук email-адрес за допомогою регулярного виразу
+email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+new_text = re.sub(email_pattern, "*@*", text)
+
+# виведення заміненого тексту
+print(new_text)
