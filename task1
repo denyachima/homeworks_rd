@@ -1,0 +1,53 @@
+import re
+
+phone_book = {}
+
+def stats():
+    print("Number of records:", len(phone_book))
+
+def add():
+    name = input("Enter name: ")
+    if name not in phone_book:
+        phone_number = input("Enter phone number: ")
+        if re.match(r'^(\+?380|0)\d{9}$', phone_number):
+            phone_book[name] = {"phone": phone_number}
+            print(name, "has been added to the phone book.")
+        else:
+            print("Invalid phone number format.")
+    else:
+        print(name, "is already in the phone book.")
+
+def delete(name):
+    if name in phone_book:
+        del phone_book[name]
+        print(name, "has been deleted from the phone book.")
+    else:
+        print(name, "is not in the phone book.")
+
+def list_names():
+    for name in phone_book:
+        print(name)
+
+def show(name):
+    if name in phone_book:
+        print("Name:", name)
+        print("Phone Number:", phone_book[name]["phone"])
+    else:
+        print(name, "is not in the phone book.")
+
+while True:
+    command = input("Enter command (stats, add, delete, list, show): ")
+    if command == "stats":
+        stats()
+    elif command == "add":
+        add()
+    elif command.startswith("delete "):
+        name = command.split(" ")[1]
+        delete(name)
+    elif command == "list":
+        list_names()
+    elif command.startswith("show "):
+        name = command.split(" ")[1]
+        show(name)
+    else:
+        print("Invalid command.")

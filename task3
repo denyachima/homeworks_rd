@@ -1,0 +1,17 @@
+import re
+
+filename = input("Введіть назву файлу: ")
+
+with open(filename, "r") as f:
+    text = f.read()
+
+    # Використовуємо регулярні вирази для пошуку email-адрес
+    pattern = r'([\w\.-]+)@([\w\.-]+)'
+    matches = re.findall(pattern, text)
+
+    for match in matches:
+        email = match[0] + "@" + match[1]
+        replacement = match[0][0] + "***@" + "***" + match[1][-1]
+        text = text.replace(email, replacement)
+
+    print(text)
