@@ -1,0 +1,23 @@
+import requests
+
+CITIES = [
+    {'name': 'Киев', 'lat': '50.43', 'lon': '30.52'},
+    {'name': 'Одесса', 'lat': '46.47', 'lon': '30.73'},
+    {'name': 'Львов', 'lat': '49.84', 'lon': '24.03'},
+    {'name': 'Харьков', 'lat': '50.00', 'lon': '36.22'},
+    {'name': 'Хмельницкий', 'lat': '49.43', 'lon': '27.00'}
+]
+
+averages = {}
+
+for city in CITIES:
+    url = f'https://api.open-meteo.com/v1/forecast/daily?latitude={city["lat"]}&longitude={city["lon"]}&limit=7'
+    response = requests.get(url)
+    response.raise_for_status()  # Raises an exception if the response code is not 2xx
+    data = response.json()
+    temps = [day['airTemperature'] for day in data['forecastDays']]
+    average = sum(temps) / len(temps)
+    averages[city['name']] = average
+
+hottest_city = max(averages, key=averages.get)
+print(f'Сейчас теплее всего в {hottest_city} ({averages[hottest_city]}°C)')
