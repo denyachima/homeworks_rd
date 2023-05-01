@@ -1,0 +1,23 @@
+import requests
+from concurrent.futures import ThreadPoolExecutor
+
+CITIES = [
+    {'name': 'Киев', 'lat': '50.43', 'lon': '30.52'},
+    {'name': 'Одесса', 'lat': '46.47', 'lon': '30.73'},
+    {'name': 'Львов', 'lat': '49.84', 'lon': '24.03'},
+    {'name': 'Харьков', 'lat': '50.00', 'lon': '36.22'},
+    {'name': 'Хмельницкий', 'lat': '49.43', 'lon': '27.00'}
+]
+
+def get_weather(city):
+    url = f'https://api.open-meteo.com/v1/forecast?latitude={city["lat"]}&longitude={city["lon"]}'
+    response = requests.get(url)
+    response.raise_for_status()  # Raises an exception if the response code is not 2xx
+    data = response.json()
+    return {'name': city['name'], 'weather': data}
+
+with ThreadPoolExecutor(max_workers=5) as executor:
+    results = executor.map(get_weather, CITIES)
+
+for result in results:
+    print(f'{result["name"]}: {result["weather"]["forecastTimestamps"][0]["airTemperature"]}°C')
