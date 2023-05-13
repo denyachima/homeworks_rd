@@ -1,0 +1,27 @@
+# створення класу Bot
+Bot = type('Bot', (object,), {
+    'name': None,
+    'say_name': lambda self: print(self.name),
+    'send_message': lambda self, message: print(message)
+})
+
+# створення класу TelegramBot, що наслідується від Bot
+TelegramBot = type('TelegramBot', (Bot,), {
+    'url': None,
+    'chat_id': None,
+    'send_message': lambda self, message: print(f"Sending '{message}' to {self.url}, chat id {self.chat_id}")
+})
+
+# створення екземпляру класу Bot
+bot = Bot()
+bot.name = 'My Bot'
+bot.say_name()  # виведе 'My Bot'
+bot.send_message('Hello, world!')  # виведе 'Hello, world!'
+
+# створення екземпляру класу TelegramBot
+telegram_bot = TelegramBot()
+telegram_bot.name = 'My Telegram Bot'
+telegram_bot.set_url('https://example.com')
+telegram_bot.set_chat_id(12345)
+telegram_bot.say_name()  # виведе 'My Telegram Bot'
+telegram_bot.send_message('Hello, world!')  # виведе "Sending 'Hello, world!' to https://example.com, chat id 12345"
