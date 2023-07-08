@@ -1,0 +1,12 @@
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  first_name TEXT,
+  last_name TEXT,
+  age INTEGER
+);
+
+INSERT INTO users (first_name, last_name, age) VALUES ('Anna', 'Markus', 25);
+INSERT INTO users (first_name, last_name, age) VALUES ('Lola', 'Micha', 30);
+INSERT INTO users (first_name, last_name, age) VALUES ('Michael', 'Johnson', 42);
+INSERT INTO users (first_name, last_name, age) VALUES ('Davis', 'Dmitrii', 35);
+INSERT INTO users (first_name, last_name, age) VALUES ('Evily', 'Brown', 28);
