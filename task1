@@ -1,0 +1,87 @@
+-- Таблиця для користувачів
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    age INT
+);
+
+-- Таблиця для видавництв
+CREATE TABLE publishing_house (
+    id INT PRIMARY KEY,
+    name VARCHAR(255),
+    rating INT DEFAULT 5
+);
+
+-- Таблиця для книг
+CREATE TABLE books (
+    id INT PRIMARY KEY,
+    title VARCHAR(255),
+    author VARCHAR(255),
+    year INT,
+    price DECIMAL(10, 2),
+    publishing_house_id INT,
+    FOREIGN KEY (publishing_house_id) REFERENCES publishing_house(id)
+);
+
+-- Таблиця для продажів
+CREATE TABLE purchases (
+    id INT PRIMARY KEY,
+    user_id INT,
+    book_id INT,
+    date DATE,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (book_id) REFERENCES books(id)
+);
+
+-- Таблиця для користувачів
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    age INT
+);
+
+-- Таблиця для видавництв
+CREATE TABLE publishing_house (
+    id INT PRIMARY KEY,
+    name VARCHAR(255),
+    rating INT DEFAULT 5
+);
+
+-- Таблиця для книг
+CREATE TABLE books (
+    id INT PRIMARY KEY,
+    title VARCHAR(255),
+    author VARCHAR(255),
+    year INT,
+    price DECIMAL(10, 2),
+    publishing_house_id INT,
+    FOREIGN KEY (publishing_house_id) REFERENCES publishing_house(id)
+);
+
+-- Таблиця для продажів
+CREATE TABLE purchases (
+    id INT PRIMARY KEY,
+    user_id INT,
+    book_id INT,
+    date DATE,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (book_id) REFERENCES books(id)
+);
+
+Запит 2: Виведення дати покупки та імені користувача
+
+
+SELECT p.id AS purchase_id, p.date, u.first_name, u.last_name
+FROM purchases p
+JOIN users u ON p.user_id = u.id;
+
+Запит 3: Виведення всіх користувачів та назв книжок, які вони купували
+
+
+SELECT u.id AS user_id, u.first_name, u.last_name, b.title
+FROM users u
+LEFT JOIN purchases p ON u.id = p.user_id
+LEFT JOIN books b ON p.book_id = b.id
+ORDER BY u.id;
