@@ -1,0 +1,36 @@
+import requests
+import random
+
+# Список сайтів
+websites = ["https://google.com", "https://facebook.com", "https://twitter.com", "https://amazon.com", "https://apple.com"]
+
+# Вибір випадкового сайту
+random_website = random.choice(websites)
+
+# Виконання запиту
+response = requests.get(random_website)
+
+# Вивід статусу, назви сайту та довжини HTML-коду
+print("Назва сайту:", random_website)
+print("Статус:", response.status_code)
+print("Довжина HTML-коду:", len(response.text))
+
+import requests
+
+def get_city_coordinates(city_name):
+    geocoding_api_url = f"https://api.open-meteo.com/v1/geocode?city={city_name}"
+    response = requests.get(geocoding_api_url)
+    data = response.json()
+    return data['latitude'], data['longitude']
+
+def get_weather(city_name):
+    latitude, longitude = get_city_coordinates(city_name)
+    weather_api_url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&hourly=temperature_2m"
+    response = requests.get(weather_api_url)
+    data = response.json()
+    temperature = data['hourly']['temperature_2m']['value'][0]
+    return temperature
+
+city_name = input("Введіть назву міста: ")
+current_temperature = get_weather(city_name)
+print(f"Поточна температура в місті {city_name}: {current_temperature}°C")
