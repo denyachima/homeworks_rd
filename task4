@@ -1,0 +1,46 @@
+from flask import Flask, render_template, request, redirect, abort
+
+app = Flask(__name__)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        # Повертаємо HTML форму для введення username та password при GET запиті
+        return render_template('login_form.html')
+    elif request.method == 'POST':
+        # Отримуємо дані з POST запиту
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        if username and password:
+            # Якщо є дані, перенаправляємо користувача на /users
+            return redirect('/users')
+        else:
+            # Якщо відсутні дані, повертаємо помилку 400
+            abort(400, "Missing username or password")
+
+@app.route('/users', methods=['GET'])
+def users():
+    # Повернення сторінки /users, яку можна додатково визначити
+    return "Welcome to the users page!"
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+</head>
+<body>
+    <form method="post" action="/login">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
