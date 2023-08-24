@@ -1,0 +1,74 @@
+from flask import Flask, render_template, request, jsonify
+from models import User, Book, Purchase  # Підключення моделей з бази даних
+
+app = Flask(__name__)
+
+# ... Код для підключення до бази даних і конфігурації
+
+@app.route('/users', methods=['GET'])
+def get_users():
+    users = User.query.all()
+    user_list = [{"id": user.id, "username": user.username} for user in users]
+    return jsonify(user_list)
+
+@app.route('/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user = User.query.get(user_id)
+    if user:
+        return jsonify({"id": user.id, "username": user.username})
+    else:
+        return jsonify({"message": "User not found"}), 404
+
+@app.route('/books', methods=['GET'])
+def get_books():
+    books = Book.query.all()
+    book_list = [{"id": book.id, "title": book.title} for book in books]
+    return jsonify(book_list)
+
+@app.route('/books/<int:book_id>', methods=['GET'])
+def get_book(book_id):
+    book = Book.query.get(book_id)
+    if book:
+        return jsonify({"id": book.id, "title": book.title})
+    else:
+        return jsonify({"message": "Book not found"}), 404
+
+@app.route('/purchases', methods=['GET'])
+def get_purchases():
+    purchases = Purchase.query.all()
+    purchase_list = [{"id": purchase.id, "user_id": purchase.user_id, "book_id": purchase.book_id} for purchase in purchases]
+    return jsonify(purchase_list)
+
+@app.route('/purchases/<int:purchase_id>', methods=['GET'])
+def get_purchase(purchase_id):
+    purchase = Purchase.query.get(purchase_id)
+    if purchase:
+        return jsonify({"id": purchase.id, "user_id": purchase.user_id, "book_id": purchase.book_id})
+    else:
+        return jsonify({"message": "Purchase not found"}), 404
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+from flask import render_template
+
+@app.route('/users_html', methods=['GET'])
+def get_users_html():
+    users = User.query.all()
+    return render_template('users.html', users=users)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User List</title>
+</head>
+<body>
+    <h1>User List</h1>
+    <ul>
+        {% for user in users %}
+        <li>{{ user.username }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
