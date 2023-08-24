@@ -1,0 +1,37 @@
+pip install flask-session
+
+from flask import Flask, render_template, request, redirect, abort, session
+from flask_session import Session
+
+app = Flask(__name__)
+
+# Налаштування сесії
+app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('login_form.html')
+    elif request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        if username and password:
+            # Записуємо ім'я користувача в сесію
+            session['username'] = username
+            return redirect('/users')
+        else:
+            abort(400, "Missing username or password")
+
+@app.route('/users', methods=['GET'])
+def users():
+    # Отримуємо ім'я користувача з сесії
+    username = session.get('username', 'Anonymous')
+    return render_template('users.html', users=users, username=username)
+
+# Додайте решту маршрутів та функцій для інших ендпоінтів
+
+if __name__ == '__main__':
+    app.run(debug=True)
