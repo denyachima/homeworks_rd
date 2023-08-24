@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+</head>
+<body>
+    <h1>Users</h1>
+    <ul>
+    {% for user in users %}
+        <li>{{ user }}</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+</head>
+<body>
+    <h1>User Details</h1>
+    <p>ID: {{ user_id }}</p>
+    <p>Name: {{ user_name }}</p>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+</head>
+<body>
+    <h1>Books</h1>
+    <ul>
+    {% for book in books %}
+        <li>{{ book }}</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
+
+from flask import Flask, render_template, request, redirect, abort
+
+app = Flask(__name__)
+
+# Мокові дані для прикладу
+users = ["Іван", "Марія", "Олександр"]
+books = ["Книга 1", "Книга 2", "Книга 3"]
+
+@app.route('/users', methods=['GET'])
+def get_users():
+    return render_template('users.html', users=users)
+
+@app.route('/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user_name = users[user_id] if user_id < len(users) else "Не знайдено"
+    return render_template('user_details.html', user_id=user_id, user_name=user_name)
+
+@app.route('/books', methods=['GET'])
+def get_books():
+    return render_template('books.html', books=books)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
