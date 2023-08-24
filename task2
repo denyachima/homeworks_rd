@@ -1,0 +1,27 @@
+from flask import Flask, jsonify, render_template_string
+import random
+
+app = Flask(__name__)
+
+# Перелік імен і книжок для використання в відповідях
+names = ["Іван", "Марія", "Олександр", "Анна", "Петро", "Софія"]
+books = ["Книга 1", "Книга 2", "Книга 3", "Книга 4", "Книга 5"]
+
+@app.route('/users', methods=['GET'])
+def get_users():
+    # Генеруємо рандомний список імен
+    random_names = random.sample(names, random.randint(1, len(names)))
+    return jsonify(random_names)
+
+@app.route('/books', methods=['GET'])
+def get_books():
+    # Генеруємо рандомний список книжок у вигляді HTML списку
+    random_books = random.sample(books, random.randint(1, len(books)))
+    book_list_html = "<ul>"
+    for book in random_books:
+        book_list_html += f"<li>{book}</li>"
+    book_list_html += "</ul>"
+    return render_template_string(book_list_html)
+
+if __name__ == '__main__':
+    app.run(debug=True)
