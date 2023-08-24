@@ -1,0 +1,26 @@
+pip install python-decouple
+
+SECRET_KEY=your_secret_key
+DB_NAME=your_database_name
+DB_USER=your_database_user
+DB_PASSWORD=your_database_password
+HOST=your_host
+PORT=your_port
+
+from flask import Flask
+from decouple import config
+
+app = Flask(__name__)
+app.secret_key = config('SECRET_KEY')
+
+# Отримання інших секретних даних
+db_name = config('DB_NAME')
+db_user = config('DB_USER')
+db_password = config('DB_PASSWORD')
+host = config('HOST')
+port = config('PORT')
+
+# Використання отриманих значень
+
+if __name__ == '__main__':
+    app.run(host=host, port=int(port), debug=True)
