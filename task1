@@ -1,0 +1,26 @@
+from flask import Flask
+import random
+
+app = Flask(__name__)
+
+# Масиви з іменами та книжками (замініть їх на ваші дані)
+names = ["John", "Jane", "Michael", "Emily", "William", "Olivia"]
+books = ["Book A", "Book B", "Book C", "Book D", "Book E", "Book F"]
+
+@app.route('/users', methods=['GET'])
+def get_users():
+    random_names = random.sample(names, random.randint(1, len(names)))
+    return {'users': random_names}
+
+@app.route('/books', methods=['GET'])
+def get_books():
+    random_book_list = random.sample(books, random.randint(1, len(books)))
+    html_list = '<ul>'
+    for book in random_book_list:
+        html_list += f'<li>{book}</li>'
+    html_list += '</ul>'
+    return html_list
+
+if __name__ == '__main__':
+    app.run()
+
